@@ -2,7 +2,7 @@
 #include"protocol.h"
 #include"iostream"
 
-inline void credit(const char* my_decisions,
+void credit(const char* my_decisions,
 	const char* opp_decisions,
 	int len,
 	double* my_credit,
@@ -11,13 +11,22 @@ inline void credit(const char* my_decisions,
 	double* opp_reward,
 	double* my_punishment,
 	double* opp_punishment,
-	enum protocol_code* protocol_c)
+	enum protocol_code* protocol_c,
+	bool* is_forgotten,
+	bool stat)
 {
+	*my_reward = 0;
+	*my_punishment = 1;
+	*opp_reward = 0;
+	*opp_punishment = 1;
+	*protocol_c = _100;
 	if (my_decisions[0] == 'm') {
 		if (opp_decisions[0] == 'm') {
+			*is_forgotten = true;
 			return;
 		}
 		else {
+			*is_forgotten = true;
 			/*
 				待补充
 			*/
@@ -26,12 +35,14 @@ inline void credit(const char* my_decisions,
 	}
 	else {
 		if (opp_decisions[0] == 'm') {
+			*is_forgotten = true;
 			/*
 				待补充
 			*/
 			return;
 		}
 		else {
+			*is_forgotten = false;
 			if (len == 1) {
 				if (opp_decisions[0] == 'c') {
 					*opp_reward = LAUNCHER;
@@ -86,36 +97,18 @@ inline void credit(const char* my_decisions,
 					}
 					break;
 				case _302:
-					if (opp_decisions[len - 1] == 'c') {
-						*opp_reward = LAUNCHER;
-						if (my_decisions[len - 1] == 'b') {
-							*protocol_c = _101;
-						}
-						else {
-							*my_reward = LAUNCHER;
-							*protocol_c = _100;
-						}
-					}
-					else {
-						if (my_decisions[len - 1] == 'c') {
-							*my_reward = LAUNCHER;
-							*protocol_c = _101;
-						}
-					}
+					break;
 					// 这里的设计是:
 					// 即便双方处于拒绝协议状态, 也有一定的自然几率自发地启动协议
 					// (当然这自然几率是随局数衰减的, 因此要合作趁早)
 				}
 			}
-			*my_credit = (*my_credit + *my_reward) * (*my_punishment) * DECAY;
-			*opp_credit = (*opp_credit + *opp_reward) * (*opp_punishment) * DECAY;
-			if (*my_credit > 1) {
-				*my_credit = 1;
-			}
-			if (*opp_credit > 1) {
-				*opp_credit = 1;
-			}
 		}
 		return;
 	}
+}
+void update(double* my_credit, double* opp_credit, double* my_reward, double* opp_reward, double* my_punishment, double* opp_punishment, bool* is_forgotten){
+	if (*is_forgotten) return;
+	*my_credit = (*my_credit + *my_reward) * (*my_punishment) * DECAY;
+	*opp_credit = (*opp_credit + *opp_reward) * (*opp_punishment) * DECAY;
 }

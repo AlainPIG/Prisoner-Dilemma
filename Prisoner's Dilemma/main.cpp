@@ -34,8 +34,8 @@ int main()
     f[3] = g00_stubborn;
     f[4] = g00_imitator;
     f[5] = g00_tricker;
-    f[6] = PROTOTYPE;
-    f[7] = PROTOTYPE;
+    f[6] = gXX_YYYY;
+    f[7] = gXX_YYYY;
 
 
 	// 在对抗之前，建立历史决策记录文件

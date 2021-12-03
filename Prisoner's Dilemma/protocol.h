@@ -1,9 +1,13 @@
 #pragma once
+#ifndef PROTOCOL_H
+#define PROTOCOL_H
 
-#define LAUNCHER 0.8
-#define RECEIVER 0.4
-#define BETRAYER 0.1
-#define DECAY 0.1
+
+#define LAUNCHER 0.3
+#define RECEIVER 0.2
+#define BETRAYER 0.6
+#define DECAY 0.90
+#define THRESHOLD 0.93
 
 //  --------------------------------
 //  |  LAUNCHER  |     ·¢Æð½±Àø     |
@@ -15,7 +19,7 @@
 
 enum protocol_code { _100, _101, _302 };
 
-inline void credit(const char* my_decisions,
+void credit(const char* my_decisions,
 	const char* opp_decisions,
 	int len,
 	double* my_credit,
@@ -24,4 +28,9 @@ inline void credit(const char* my_decisions,
 	double* opp_reward,
 	double* my_punishment,
 	double* opp_punishment,
-	enum protocol_code* protocol_code);
+	enum protocol_code* protocol_code,
+	bool* is_forgotten,
+	bool stat);
+
+void update(double* my_credit, double* opp_credit, double* my_reward, double* opp_reward, double* my_punishment, double* opp_punishment, bool* is_forgotten);
+#endif

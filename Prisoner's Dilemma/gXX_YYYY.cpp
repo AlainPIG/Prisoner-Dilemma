@@ -22,35 +22,33 @@ enum Decision gXX_YYYY(int rs,
 	// 信誉系统部分
 	//
 	// 这一部分的程序将封装在 credit.cpp 中
-	static double my_credit = 0.7, opp_credit = 0.7;	// 双方初始信誉分
-	static protocol_code protocol_c = _100;	// 协议代码
+	double my_credit = 0.95, opp_credit = 0.95;	// 双方初始信誉分
+	protocol_code protocol_c = _100;	// 协议代码
 	// 下面语句定义了每局双方的信誉奖励值和惩罚系数
 	//		如果加上 static 关键字, 则代表奖惩会不断继承到接下来的回合
 	//		如果不加, 则代表不考虑玩家之前信用表现对当前回合的影响
-	static double my_reward = 0, my_punishment = 1,
+	double my_reward = 0, my_punishment = 1,
 		opp_reward = 0, opp_punishment = 1;
+	bool is_forgotten = false;
 	//  --------------------------------
 	//  |    reward    |     奖励值     |
 	//  |  punishment  |    惩罚系数    |
 	//  --------------------------------
 
 	// 步骤 1: 根据信誉规则和历史记录初始化对方信誉分
-	
 	for (size_t HISTORY = 0; HISTORY < HISTORY_LENGTH; ++HISTORY) {
 		for (size_t TURN = 0; TURN < MAX_TURN; ++TURN) {
 			credit(opp_opp_history_decisions[HISTORY],
 				opp_history_decisions[HISTORY], TURN,
 				&my_credit, &opp_credit,
 				&my_reward, &opp_reward,
-				&my_punishment, &opp_punishment, &protocol_c);
+				&my_punishment, &opp_punishment, &protocol_c, &is_forgotten, true);
 		}
+		update(&my_credit, &opp_credit,
+			&my_reward, &opp_reward,
+			&my_punishment, &opp_punishment, &is_forgotten);
 	}
 	
-	my_reward = 0;
-	my_punishment = 1;
-	opp_reward = 0;
-	opp_punishment = 1;
-	protocol_c = _100;
 	// 既往不咎, 看对手的历史只是为了留个第一印象, 
 	// 对双方的信誉分奖惩从本轮开始重新计算
 	my_credit = 0.7;
@@ -58,20 +56,24 @@ enum Decision gXX_YYYY(int rs,
 
 	/*	测试代码: 看看别人信誉如何?
 	*/
-	std::cout << opp_credit << std::endl;
-
+//	if(len == 0) std::cout << opp_credit << std::endl;
+	/*
 	// 步骤 2: 根据本轮对战情况实时计算双方信誉分
 	
 	credit(my_decisions, opp_decisions, len,
 		&my_credit, &opp_credit,
 		&my_reward, &opp_reward,
 		&my_punishment, &opp_punishment, &protocol_c);
-	
+	*/
 
 	// **********************************************************
 	// **********************************************************
 
 	// 决策系统部分
+	credit(my_decisions, opp_decisions, len,
+		&my_credit, &opp_credit,
+		&my_reward, &opp_reward,
+		&my_punishment, &opp_punishment, &protocol_c, &is_forgotten, false);
 	static const double probability_power = 0.5;
 	// 根据对方信誉分计算概率
 	double probability = pow(opp_credit, probability_power);
@@ -115,7 +117,7 @@ enum Decision gXX_YYYY(int rs,
 				return Decision::BETRAYAL;
 			}
 			else {
-				if (random_number < probability) {
+				if (probability > THRESHOLD || random_number < probability) {
 					return Decision::COOPERATION;
 				}
 				else {
@@ -124,12 +126,7 @@ enum Decision gXX_YYYY(int rs,
 			}
 			break;
 		case _302:
-			if (random_number < probability) {
-				return Decision::COOPERATION;
-			}
-			else {
-				return Decision::BETRAYAL;
-			}
+			return Decision::BETRAYAL;
 		}
 	}
 
