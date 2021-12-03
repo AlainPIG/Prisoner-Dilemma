@@ -14,20 +14,25 @@
 using namespace std;
 int CUR_ROUND = 1;
 void PRINT_SCORE(int, int*);
+int score_transfer[9][9]={0};
 
 int main()
 {
 	// 策略数量，参赛组数
 	const int num_player = 40;
-    const int gp = num_player / 4;
+    const int gp = num_player / 8;
 	// 策略函数指针数组，可以在此添加自己的策略
 	// 此处+1是为了让组的id和传入的id一致
 	//enum Decision(*f[num_player + 1])(int rs, int len, int my_id, const char my_decisions[], int opp_id, const char opp_decisions[], const int repay[MAX_TURN][4], const char opp_history_decisions[HISTORY_LENGTH][MAX_TURN], const char opp_opp_history_decisions[HISTORY_LENGTH][MAX_TURN]);
 	enum Decision(*f[num_player + 1])(int, int, int, const char[], int, const char[], const int[][4], const char [][MAX_TURN], const char [][MAX_TURN]);
     for (int i = 1; i <= gp; i++) f[i] = &gXX_YYYY;
-    for (int i = gp+1; i <= 2*gp; i++) f[i] = &g00_naive;
+    for (int i = gp+1; i <= 2*gp; i++) f[i] = &g00_philosopher;
     for (int i = 2*gp+1; i <= 3*gp; i++) f[i] = &g00_philosopher;
     for (int i = 3*gp+1; i <= 4*gp; i++) f[i] = &g00_tricker;
+    for (int i = 4 * gp + 1; i <= 5 * gp; i++) f[i] = &g00_imitator;
+    for (int i = 5 * gp + 1; i <= 6 * gp; i++) f[i] = &g00_imitator;
+    for (int i = 6 * gp + 1; i <= 7 * gp; i++) f[i] = &g00_naive;
+    for (int i = 7 * gp + 1; i <= 8 * gp; i++) f[i] = &g00_naive;
 
 	// 在对抗之前，建立历史决策记录文件
 	ofstream streams[num_player + 1];
@@ -98,7 +103,7 @@ int main()
 		// 遍历所有对抗对
         for (auto iter = order.begin(); iter != order.end(); iter++, CUR_ROUND++) 
         {   
-            if (CUR_ROUND % 20 == 0) {
+            if (CUR_ROUND % 50 == 0) {
                 PRINT_SCORE(num_player, scores);
             }
             // iter 遍历 order, 代表一对对手
@@ -322,6 +327,8 @@ int main()
             }
             scores[id_a] += score_a;
             scores[id_b] += score_b;
+            score_transfer[(id_a-1) / 5][(id_b-1) / 5] += score_a;
+            score_transfer[(id_b-1) / 5][(id_a-1) / 5] += score_b;
             // 输出本轮结果
             //cout << id_a << " V.S. " << id_b << endl;
             //cout << score_a << " " << score_b << endl;
@@ -345,6 +352,13 @@ int main()
         cout <<"player "<<i<<": "<< scores[i] << endl;
 	}
 
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            std::cout << score_transfer[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+
 	for (int i = 1; i <= num_player; i++)
     {
 		streams[i].close();
@@ -357,9 +371,9 @@ int main()
 
 
 void PRINT_SCORE(int num_player, int *scores) {
-    int a = num_player / 4;
+    int a = num_player / 8;
     int ret = 0;
-    for (int i = 0; i <= 3; i++) {
+    for (int i = 0; i <= 7; i++) {
         ret = 0;
         for (int j = (i * a + 1); j <= (i + 1) * a; j++) {
             ret += scores[j];
