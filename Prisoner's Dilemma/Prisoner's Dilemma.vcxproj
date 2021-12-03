@@ -150,6 +150,7 @@
     <ClCompile Include="g00_philosopher.cpp" />
     <ClCompile Include="g00_stubborn.cpp" />
     <ClCompile Include="g00_tricker.cpp" />
+    <ClCompile Include="gXX_XXXX.cpp" />
     <ClCompile Include="PROTOTYPE.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>

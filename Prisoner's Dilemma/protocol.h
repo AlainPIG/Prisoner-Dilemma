@@ -24,4 +24,4 @@ inline void credit(const char* my_decisions,
 	double* opp_reward,
 	double* my_punishment,
 	double* opp_punishment,
-	enum protocol_code protocol_code);
+	enum protocol_code* protocol_code);

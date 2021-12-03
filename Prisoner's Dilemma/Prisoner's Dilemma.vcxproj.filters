@@ -42,6 +42,9 @@
     <ClCompile Include="credit.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="gXX_XXXX.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="configure.h">
