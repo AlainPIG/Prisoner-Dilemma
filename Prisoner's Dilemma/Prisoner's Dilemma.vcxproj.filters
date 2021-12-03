@@ -24,9 +24,27 @@
     <ClCompile Include="PROTOTYPE.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="g00_imitator.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="g00_naive.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="g00_philosopher.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="g00_stubborn.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="g00_tricker.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="configure.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

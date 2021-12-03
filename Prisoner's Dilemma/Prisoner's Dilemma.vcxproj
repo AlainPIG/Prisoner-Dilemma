@@ -140,9 +140,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="configure.h" />
+    <ClInclude Include="protocol.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DEFAULT.cpp" />
+    <ClCompile Include="g00_imitator.cpp" />
+    <ClCompile Include="g00_naive.cpp" />
+    <ClCompile Include="g00_philosopher.cpp" />
+    <ClCompile Include="g00_stubborn.cpp" />
+    <ClCompile Include="g00_tricker.cpp" />
     <ClCompile Include="PROTOTYPE.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
