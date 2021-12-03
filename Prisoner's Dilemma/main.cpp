@@ -25,8 +25,8 @@ int main()
 	//enum Decision(*f[num_player + 1])(int rs, int len, int my_id, const char my_decisions[], int opp_id, const char opp_decisions[], const int repay[MAX_TURN][4], const char opp_history_decisions[HISTORY_LENGTH][MAX_TURN], const char opp_opp_history_decisions[HISTORY_LENGTH][MAX_TURN]);
 	enum Decision(*f[num_player + 1])(int, int, int, const char[], int, const char[], const int[][4], const char [][MAX_TURN], const char [][MAX_TURN]);
     for (int i = 1; i <= gp; i++) f[i] = &gXX_YYYY;
-    for (int i = gp+1; i <= 2*gp; i++) f[i] = &g00_tricker;
-    for (int i = 2*gp+1; i <= 3*gp; i++) f[i] = &g00_stubborn;
+    for (int i = gp+1; i <= 2*gp; i++) f[i] = &g00_naive;
+    for (int i = 2*gp+1; i <= 3*gp; i++) f[i] = &g00_philosopher;
     for (int i = 3*gp+1; i <= 4*gp; i++) f[i] = &g00_tricker;
 
 	// 在对抗之前，建立历史决策记录文件
