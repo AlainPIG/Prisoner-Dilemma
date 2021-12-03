@@ -6,7 +6,7 @@
 #define LAUNCHER 0.3
 #define RECEIVER 0.2
 #define BETRAYER 0.6
-#define DECAY 0.90
+#define DECAY 0.98
 #define THRESHOLD 0.93
 
 //  --------------------------------

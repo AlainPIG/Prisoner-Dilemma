@@ -37,13 +37,11 @@ enum Decision gXX_YYYY(int rs,
 
 	// 步骤 1: 根据信誉规则和历史记录初始化对方信誉分
 	for (size_t HISTORY = 0; HISTORY < HISTORY_LENGTH; ++HISTORY) {
-		for (size_t TURN = 0; TURN < MAX_TURN; ++TURN) {
-			credit(opp_opp_history_decisions[HISTORY],
-				opp_history_decisions[HISTORY], TURN,
-				&my_credit, &opp_credit,
-				&my_reward, &opp_reward,
-				&my_punishment, &opp_punishment, &protocol_c, &is_forgotten, true);
-		}
+		credit(opp_opp_history_decisions[HISTORY],
+			opp_history_decisions[HISTORY], MAX_TURN - 1,
+			&my_credit, &opp_credit,
+			&my_reward, &opp_reward,
+			&my_punishment, &opp_punishment, &protocol_c, &is_forgotten, true);
 		update(&my_credit, &opp_credit,
 			&my_reward, &opp_reward,
 			&my_punishment, &opp_punishment, &is_forgotten);

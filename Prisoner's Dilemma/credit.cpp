@@ -33,17 +33,17 @@ void credit(const char* my_decisions,
 			return;
 		}
 	}
-	else {
-		if (opp_decisions[0] == 'm') {
+	else if (opp_decisions[0] == 'm') {
 			*is_forgotten = true;
 			/*
 				待补充
 			*/
 			return;
-		}
-		else {
-			*is_forgotten = false;
-			if (len == 1) {
+	}
+	else {
+		*is_forgotten = false;
+		for (int i = 0; i < len; i++) {
+			if (i == 0) {
 				if (opp_decisions[0] == 'c') {
 					*opp_reward = LAUNCHER;
 					if (my_decisions[0] == 'b') {
@@ -57,6 +57,7 @@ void credit(const char* my_decisions,
 				else {
 					if (my_decisions[0] == 'b') {
 						*protocol_c = _302;
+						return;
 					}
 					else {
 						*my_reward = LAUNCHER;
@@ -64,43 +65,39 @@ void credit(const char* my_decisions,
 					}
 				}
 			}
-			else if (len >= 2) {
+			else if (i == 1) {
 				switch (*protocol_c) {
 				case _101:
-					if (my_decisions[len - 2] == 'c') {
-						if (opp_decisions[len - 1] == 'b') {
-							*protocol_c = _302;
-						}
-						else {
-							*opp_reward = RECEIVER;
-							*protocol_c = _100;
-						}
+					if (opp_decisions[0] == 'c' && my_decisions[1] == 'c') {
+						*protocol_c = _100;
+						*my_reward = RECEIVER;
+						*opp_reward = LAUNCHER;
+					}
+					else if (opp_decisions[1] == 'c' && my_decisions[1] == 'c') {
+						*protocol_c = _100;
+						*my_reward = RECEIVER;
+						*opp_reward = LAUNCHER;
 					}
 					else {
-						if (my_decisions[len - 1] == 'b') {
-							*protocol_c = _302;
-						}
-						else {
-							*my_reward = RECEIVER;
-							*protocol_c = _100;
-						}
+						*protocol_c = _302;
+						return;
 					}
 					break;
 				case _100:
-					if (my_decisions[len - 1] == 'b') {
-						*my_punishment = BETRAYER;
+					if (my_decisions[1] == 'b' || opp_decisions[1] == 'b') {
 						*protocol_c = _302;
+						if (my_decisions[1] == 'b') *my_punishment = BETRAYER;
+						if (opp_decisions[1] == 'b') *opp_punishment = BETRAYER;
+						return;
 					}
-					if (opp_decisions[len - 1] == 'b') {
-						*opp_punishment = BETRAYER;
-						*protocol_c = _302;
-					}
-					break;
-				case _302:
-					break;
-					// 这里的设计是:
-					// 即便双方处于拒绝协议状态, 也有一定的自然几率自发地启动协议
-					// (当然这自然几率是随局数衰减的, 因此要合作趁早)
+				}
+			}
+			else if (i >= 2) {
+				if (my_decisions[i] == 'b' || opp_decisions[i] == 'b') {
+					*protocol_c = _302;
+					if (my_decisions[i] == 'b') *my_punishment = BETRAYER;
+					if (opp_decisions[i] == 'b') *opp_punishment = BETRAYER;
+					return;
 				}
 			}
 		}
