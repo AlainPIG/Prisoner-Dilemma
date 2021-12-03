@@ -6,7 +6,7 @@
 #include"configure.h"
 #include"protocol.h"
 
-enum Decision gXX_YYYY(int rs,
+enum Decision MODEL(int rs,
 	int len,
 	int my_id,
 	const char* my_decisions,
