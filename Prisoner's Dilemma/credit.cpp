@@ -19,14 +19,16 @@ void credit(const char* my_decisions,
 	*my_punishment = 1;
 	*opp_reward = 0;
 	*opp_punishment = 1;
+	// 每查看一轮对手的历史记录, 都将奖惩清空
 	*protocol_c = _100;
+	// 每查看一轮对手的历史记录, 默认协议代码为 "_100" 即 "握手"
 	if (my_decisions[0] == 'm') {
+		*is_forgotten = true;
+		// 如果记录为 'm', 则标记为 "已遗忘"
 		if (opp_decisions[0] == 'm') {
-			*is_forgotten = true;
 			return;
 		}
 		else {
-			*is_forgotten = true;
 			/*
 				待补充
 			*/
@@ -42,6 +44,7 @@ void credit(const char* my_decisions,
 	}
 	else {
 		*is_forgotten = false;
+		// 如果双方记录均未遗忘, 则开始根据记录计算奖惩
 		for (int i = 0; i < len; i++) {
 			if (i == 0) {
 				if (opp_decisions[0] == 'c') {
@@ -93,12 +96,23 @@ void credit(const char* my_decisions,
 				}
 			}
 			else if (i >= 2) {
-				if (my_decisions[i] == 'b' || opp_decisions[i] == 'b') {
-					*protocol_c = _302;
-					if (my_decisions[i] == 'b') *my_punishment = BETRAYER;
-					if (opp_decisions[i] == 'b') *opp_punishment = BETRAYER;
-					return;
+				switch (*protocol_c) {
+				case _101:				
+					if (my_decisions[i] == 'b' || opp_decisions[i] == 'b') {
+						*protocol_c = _302;
+						if (my_decisions[i] == 'b') *my_punishment = BETRAYER;
+						if (opp_decisions[i] == 'b') *opp_punishment = BETRAYER;
+						return;
+					}
+					break;
+				case _302:
+					if (my_decisions[i] == 'c' || opp_decisions[i] == 'c') {
+						if (my_decisions[i] == 'c') *my_punishment = IDIOT;
+						if (opp_decisions[i] == 'c') *opp_punishment = IDIOT;
+						return;
+					}
 				}
+
 			}
 		}
 		return;
