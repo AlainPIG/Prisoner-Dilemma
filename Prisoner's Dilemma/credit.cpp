@@ -2,7 +2,7 @@
 #include"protocol.h"
 #include"iostream"
 
-inline void credit(const char* my_decisions,
+void credit(const char* my_decisions,
 	const char* opp_decisions,
 	int len,
 	double* my_credit,
