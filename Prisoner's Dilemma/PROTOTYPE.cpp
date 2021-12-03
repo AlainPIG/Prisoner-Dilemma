@@ -32,7 +32,7 @@ enum Decision PROTOTYPE(int rs,
 	//		如果不加, 则代表不考虑玩家之前信用表现对当前回合的影响
 	static double my_reward = 0, my_punishment = 1,
 		opp_reward = 0, opp_punishment = 1;
-	static const double decay = 0.2;
+	static const double decay = 0.9;
 	//  --------------------------------
 	//  |    reward    |     奖励值     |
 	//  |  punishment  |    惩罚系数    |
