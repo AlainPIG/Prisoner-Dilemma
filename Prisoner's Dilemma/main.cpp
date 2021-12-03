@@ -21,7 +21,7 @@ int main()
 	// 此处+1是为了让组的id和传入的id一致
 	//enum Decision(*f[num_player + 1])(int rs, int len, int my_id, const char my_decisions[], int opp_id, const char opp_decisions[], const int repay[MAX_TURN][4], const char opp_history_decisions[HISTORY_LENGTH][MAX_TURN], const char opp_opp_history_decisions[HISTORY_LENGTH][MAX_TURN]);
 	enum Decision(*f[num_player + 1])(int, int, int, const char[], int, const char[], const int[][4], const char [][MAX_TURN], const char [][MAX_TURN]);
-	for(int i=1;i<=num_player;i++) f[i] = &PROTOTYPE
+    for (int i = 1; i <= num_player; i++) f[i] = &PROTOTYPE;
 
 	// 在对抗之前，建立历史决策记录文件
 	ofstream streams[num_player + 1];

@@ -35,12 +35,12 @@ inline void credit(const char* my_decisions,
 			for (size_t i = 0;i < len; ++i) {
 				if (len == 1) {
 					if (opp_decisions[0] == 'c') {
-						opp_reward = LAUNCHER;
+						*opp_reward = LAUNCHER;
 						if (my_decisions[0] == 'b') {
 							protocol_code = _101;
 						}
 						else {
-							my_reward = LAUNCHER;
+							*my_reward = LAUNCHER;
 							protocol_code = _100;
 						}
 					}
@@ -49,7 +49,7 @@ inline void credit(const char* my_decisions,
 							protocol_code = _302;
 						}
 						else {
-							my_reward = LAUNCHER;
+							*my_reward = LAUNCHER;
 							protocol_code = _101;
 						}
 					}
@@ -62,7 +62,7 @@ inline void credit(const char* my_decisions,
 								protocol_code = _302;
 							}
 							else {
-								opp_reward = RECEIVER;
+								*opp_reward = RECEIVER;
 								protocol_code = _100;
 							}
 						}
@@ -71,35 +71,35 @@ inline void credit(const char* my_decisions,
 								protocol_code = _302;
 							}
 							else {
-								my_reward = RECEIVER;
+								*my_reward = RECEIVER;
 								protocol_code = _100;
 							}
 						}
 						break;
 					case _100:
 						if (my_decisions[len - 1] == 'b') {
-							my_punishment = BETRAYER;
+							*my_punishment = BETRAYER;
 							protocol_code = _302;
 						}
 						if (opp_decisions[len - 1] == 'b') {
-							opp_punishment = BETRAYER;
+							*opp_punishment = BETRAYER;
 							protocol_code = _302;
 						}
 						break;
 					case _302:
 						if (opp_decisions[len - 1] == 'c') {
-							opp_reward = LAUNCHER;
+							*opp_reward = LAUNCHER;
 							if (my_decisions[len - 1] == 'b') {
 								protocol_code = _101;
 							}
 							else {
-								my_reward = LAUNCHER;
+								*my_reward = LAUNCHER;
 								protocol_code = _100;
 							}
 						}
 						else {
 							if (my_decisions[len - 1] == 'c') {
-								my_reward = LAUNCHER;
+								*my_reward = LAUNCHER;
 								protocol_code = _101;
 							}
 						}
@@ -108,13 +108,13 @@ inline void credit(const char* my_decisions,
 						// (当然这自然几率是随局数衰减的, 因此要合作趁早)
 					}
 				}
-				my_credit = (my_credit + my_reward) * my_punishment * DECAY;
-				opp_credit = (opp_credit + opp_reward) * opp_punishment * DECAY;
-				if (my_credit > 1) {
-					my_credit = 1;
+				*my_credit = (*my_credit + *my_reward) * (* my_punishment) * DECAY;
+				*opp_credit = (*opp_credit + *opp_reward) * (* opp_punishment)* DECAY;
+				if (*my_credit > 1) {
+					*my_credit = 1;
 				}
-				if (opp_credit > 1) {
-					opp_credit = 1;
+				if (*opp_credit > 1) {
+					*opp_credit = 1;
 				}
 			}
 		}
