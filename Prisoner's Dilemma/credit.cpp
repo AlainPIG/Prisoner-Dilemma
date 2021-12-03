@@ -11,7 +11,7 @@ inline void credit(const char* my_decisions,
 	double* opp_reward,
 	double* my_punishment,
 	double* opp_punishment,
-	enum protocol_code* protocol_code)
+	enum protocol_code* protocol_c)
 {
 	if (my_decisions[0] == 'm') {
 		if (opp_decisions[0] == 'm') {
@@ -36,70 +36,70 @@ inline void credit(const char* my_decisions,
 				if (opp_decisions[0] == 'c') {
 					*opp_reward = LAUNCHER;
 					if (my_decisions[0] == 'b') {
-						*protocol_code = _101;
+						*protocol_c = _101;
 					}
 					else {
 						*my_reward = LAUNCHER;
-						*protocol_code = _100;
+						*protocol_c = _100;
 					}
 				}
 				else {
 					if (my_decisions[0] == 'b') {
-						*protocol_code = _302;
+						*protocol_c = _302;
 					}
 					else {
 						*my_reward = LAUNCHER;
-						*protocol_code = _101;
+						*protocol_c = _101;
 					}
 				}
 			}
 			else if (len >= 2) {
-				switch (*protocol_code) {
+				switch (*protocol_c) {
 				case _101:
 					if (my_decisions[len - 2] == 'c') {
 						if (opp_decisions[len - 1] == 'b') {
-							*protocol_code = _302;
+							*protocol_c = _302;
 						}
 						else {
 							*opp_reward = RECEIVER;
-							*protocol_code = _100;
+							*protocol_c = _100;
 						}
 					}
 					else {
 						if (my_decisions[len - 1] == 'b') {
-							*protocol_code = _302;
+							*protocol_c = _302;
 						}
 						else {
 							*my_reward = RECEIVER;
-							*protocol_code = _100;
+							*protocol_c = _100;
 						}
 					}
 					break;
 				case _100:
 					if (my_decisions[len - 1] == 'b') {
 						*my_punishment = BETRAYER;
-						*protocol_code = _302;
+						*protocol_c = _302;
 					}
 					if (opp_decisions[len - 1] == 'b') {
 						*opp_punishment = BETRAYER;
-						*protocol_code = _302;
+						*protocol_c = _302;
 					}
 					break;
 				case _302:
 					if (opp_decisions[len - 1] == 'c') {
 						*opp_reward = LAUNCHER;
 						if (my_decisions[len - 1] == 'b') {
-							*protocol_code = _101;
+							*protocol_c = _101;
 						}
 						else {
 							*my_reward = LAUNCHER;
-							*protocol_code = _100;
+							*protocol_c = _100;
 						}
 					}
 					else {
 						if (my_decisions[len - 1] == 'c') {
 							*my_reward = LAUNCHER;
-							*protocol_code = _101;
+							*protocol_c = _101;
 						}
 					}
 					// 这里的设计是:

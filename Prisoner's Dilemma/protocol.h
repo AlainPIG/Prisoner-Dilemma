@@ -13,7 +13,7 @@
 //  --------------------------------
 
 
-enum protocol_code { _100, _101, _302 } protocol_code;
+enum protocol_code { _100, _101, _302 };
 
 inline void credit(const char* my_decisions,
 	const char* opp_decisions,

@@ -42,7 +42,7 @@
     <ClCompile Include="credit.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="gXX_XXXX.cpp">
+    <ClCompile Include="gXX_YYYY.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
