@@ -30,6 +30,6 @@ iii) 声明了一个函数 credit 的原型, 其定义在 credit.cpp 中.
 
 
 
-// gXX XXXX.cpp //
+// MODEL.cpp //
 
-调用了 credit.cpp 中的函数, 并使用它进行决策.
+最终的决策函数，当naive出现率较低时表现非常优秀。
