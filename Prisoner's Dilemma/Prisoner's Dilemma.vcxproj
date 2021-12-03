@@ -143,6 +143,7 @@
     <ClInclude Include="protocol.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="credit.cpp" />
     <ClCompile Include="DEFAULT.cpp" />
     <ClCompile Include="g00_imitator.cpp" />
     <ClCompile Include="g00_naive.cpp" />
