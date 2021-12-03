@@ -12,22 +12,22 @@
 #include "configure.h"
 
 using namespace std;
+int CUR_ROUND = 1;
+void PRINT_SCORE(int, int*);
 
 int main()
 {
 	// 策略数量，参赛组数
-	const int num_player = 7;
+	const int num_player = 40;
+    const int gp = num_player / 4;
 	// 策略函数指针数组，可以在此添加自己的策略
 	// 此处+1是为了让组的id和传入的id一致
 	//enum Decision(*f[num_player + 1])(int rs, int len, int my_id, const char my_decisions[], int opp_id, const char opp_decisions[], const int repay[MAX_TURN][4], const char opp_history_decisions[HISTORY_LENGTH][MAX_TURN], const char opp_opp_history_decisions[HISTORY_LENGTH][MAX_TURN]);
 	enum Decision(*f[num_player + 1])(int, int, int, const char[], int, const char[], const int[][4], const char [][MAX_TURN], const char [][MAX_TURN]);
-    f[1] = &PROTOTYPE;
-    f[2] = &g00_naive;
-    f[3] = &g00_imitator;
-    f[4] = &g00_philosopher;
-    f[5] = &g00_stubborn;
-    f[6] = &g00_tricker;
-    f[7] = &PROTOTYPE;
+    for (int i = 1; i <= gp; i++) f[i] = &PROTOTYPE;
+    for (int i = gp+1; i <= 2*gp; i++) f[i] = &g00_tricker;
+    for (int i = 2*gp+1; i <= 3*gp; i++) f[i] = &g00_imitator;
+    for (int i = 3*gp+1; i <= 4*gp; i++) f[i] = &g00_philosopher;
 
 	// 在对抗之前，建立历史决策记录文件
 	ofstream streams[num_player + 1];
@@ -96,8 +96,11 @@ int main()
         choice_a[MAX_TURN] = '\0';
         choice_b[MAX_TURN] = '\0';
 		// 遍历所有对抗对
-        for (auto iter = order.begin(); iter != order.end(); iter++) 
-        {
+        for (auto iter = order.begin(); iter != order.end(); iter++, CUR_ROUND++) 
+        {   
+            if (CUR_ROUND % 20 == 0) {
+                PRINT_SCORE(num_player, scores);
+            }
             // iter 遍历 order, 代表一对对手
             id_a = iter->first;         // 选手 a 的编号
             id_b = iter->second;        // 选手 b 的编号
@@ -320,9 +323,9 @@ int main()
             scores[id_a] += score_a;
             scores[id_b] += score_b;
             // 输出本轮结果
-            cout << id_a << " V.S. " << id_b << endl;
-            cout << score_a << " " << score_b << endl;
-            cout << choice_a << " " << choice_b << endl;
+            //cout << id_a << " V.S. " << id_b << endl;
+            //cout << score_a << " " << score_b << endl;
+            //cout << choice_a << " " << choice_b << endl;
             // 将对战信息写入文件
             streams[id_a] << id_a << " " << id_b << endl;
             streams[id_a] << score_a << " " << score_b << endl;
@@ -350,4 +353,18 @@ int main()
 
 	system("pause");
 	return 0;
+}
+
+
+void PRINT_SCORE(int num_player, int *scores) {
+    int a = num_player / 4;
+    int ret = 0;
+    for (int i = 0; i <= 3; i++) {
+        ret = 0;
+        for (int j = (i * a + 1); j <= (i + 1) * a; j++) {
+            ret += scores[j];
+        }
+        printf("%d ", ret);
+    }
+    printf("\n");
 }

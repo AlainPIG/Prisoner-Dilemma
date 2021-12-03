@@ -19,7 +19,8 @@ enum Decision PROTOTYPE(int rs,
 	// **********************************************************
 
 	// 信誉系统部分
-	static const double LAUNCHER = 0.5, RECEIVER = 0.2, BETRAYER = 0.1;
+	//static const double LAUNCHER = 0.5, RECEIVER = 0.2, BETRAYER = 0.1;
+	static const double LAUNCHER = 0.3, RECEIVER = 0.2, BETRAYER = 0.1;
 	//  --------------------------------
 	//  |  LAUNCHER  |     发起奖励     |
 	//  |  RECEIVER  |     接受奖励     |
@@ -32,7 +33,7 @@ enum Decision PROTOTYPE(int rs,
 	//		如果不加, 则代表不考虑玩家之前信用表现对当前回合的影响
 	static double my_reward = 0, my_punishment = 1,
 		opp_reward = 0, opp_punishment = 1;
-	static const double decay = 0.9;
+	static const double decay = 0.85;
 	//  --------------------------------
 	//  |    reward    |     奖励值     |
 	//  |  punishment  |    惩罚系数    |
