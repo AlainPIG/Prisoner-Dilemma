@@ -29,7 +29,7 @@ int main()
     for (int i = gp+1; i <= 2*gp; i++) f[i] = &g00_philosopher;
     for (int i = 2*gp+1; i <= 3*gp; i++) f[i] = &g00_stubborn;
     for (int i = 3*gp+1; i <= 4*gp; i++) f[i] = &g00_tricker;
-    for (int i = 4 * gp + 1; i <= 5 * gp; i++) f[i] = &g00_naive;
+    for (int i = 4 * gp + 1; i <= 5 * gp; i++) f[i] = &g00_stubborn;
     for (int i = 5 * gp + 1; i <= 6 * gp; i++) f[i] = &g00_naive;
     for (int i = 6 * gp + 1; i <= 7 * gp; i++) f[i] = &g00_naive;
     for (int i = 7 * gp + 1; i <= 8 * gp; i++) f[i] = &g00_naive;
