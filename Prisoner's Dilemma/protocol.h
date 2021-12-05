@@ -8,6 +8,7 @@
 #define BETRAYER 0.6
 #define DECAY 0.98
 #define THRESHOLD 0.93
+#define IDIOT 0.98
 
 //  --------------------------------
 //  |  LAUNCHER  |     ·¢Æð½±Àø     |
@@ -32,5 +33,11 @@ void credit(const char* my_decisions,
 	bool* is_forgotten,
 	bool stat);
 
-void update(double* my_credit, double* opp_credit, double* my_reward, double* opp_reward, double* my_punishment, double* opp_punishment, bool* is_forgotten);
+void update(double* my_credit,
+	double* opp_credit, 
+	double* my_reward, 
+	double* opp_reward, 
+	double* my_punishment, 
+	double* opp_punishment, 
+	bool* is_forgotten);
 #endif
