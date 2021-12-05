@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClCompile Include="credit.cpp" />
     <ClCompile Include="DEFAULT.cpp" />
+    <ClCompile Include="FINAL.cpp" />
     <ClCompile Include="g00_imitator.cpp" />
     <ClCompile Include="g00_naive.cpp" />
     <ClCompile Include="g00_philosopher.cpp" />

@@ -21,7 +21,7 @@ enum Decision MODEL(int rs,
 
 	// 信誉系统部分
 	//
-	// 这一部分的程序将封装在 credit.cpp 中
+	// 这一部分的程序封装在 credit.cpp 中
 	double my_credit = 0.95, opp_credit = 0.95;	// 双方初始信誉分
 	protocol_code protocol_c = _100;	// 协议代码
 	// 下面语句定义了每局双方的信誉奖励值和惩罚系数
@@ -35,7 +35,7 @@ enum Decision MODEL(int rs,
 	//  |  punishment  |    惩罚系数    |
 	//  --------------------------------
 
-	// 步骤 1: 根据信誉规则和历史记录初始化对方信誉分
+	// 根据信誉规则和历史记录初始化对方信誉分
 	for (size_t HISTORY = 0; HISTORY < HISTORY_LENGTH; ++HISTORY) {
 		credit(opp_opp_history_decisions[HISTORY],
 			opp_history_decisions[HISTORY], MAX_TURN - 1,
@@ -55,14 +55,7 @@ enum Decision MODEL(int rs,
 	/*	测试代码: 看看别人信誉如何?
 	*/
 //	if(len == 0) std::cout << opp_credit << std::endl;
-	/*
-	// 步骤 2: 根据本轮对战情况实时计算双方信誉分
-	
-	credit(my_decisions, opp_decisions, len,
-		&my_credit, &opp_credit,
-		&my_reward, &opp_reward,
-		&my_punishment, &opp_punishment, &protocol_c);
-	*/
+
 
 	// **********************************************************
 	// **********************************************************
